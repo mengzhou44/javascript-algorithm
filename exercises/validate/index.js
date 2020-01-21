@@ -26,4 +26,13 @@ function validate(node, min = null, max = null) {
 }
  
 
+function canWinNim(n) {
+  if (n <=3)  return true;
+   if (n === 4)  return false;       
+  return  canWinNim(n-4)
+   
+};
+
+console.log(canWinNim(5));
+
 module.exports = validate;
