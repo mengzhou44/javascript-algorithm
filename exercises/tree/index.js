@@ -11,48 +11,81 @@
 // function that gets called with each element in the tree
 
 class Node {
-  constructor(data) {
-    this.data = data;
-    this.children = [];
-  }
+    constructor(data) {
+        this.data = data;
+        this.children = [];
+    }
 
-  add(data) {
-    this.children.push(new Node(data));
-  }
+    add(data) {
+        this.children.push(new Node(data));
+    }
 
-  remove(data) {
-    this.children = this.children.filter(n => n.data !== data);
-  }
+    remove(data) {
+        this.children = this.children.filter(n => n.data !== data);
+    }
 }
 
 class Tree {
-  constructor() {
-    this.root = null;
-  }
-
-  traverseBF(fn) {
-    let array = [this.root];
-
-    while (array.length > 0) {
-      let node = array.shift();
-      fn(node);
-      for (let child of node.children) {
-        array.push(child);
-      }
+    constructor() {
+        this.root = null;
     }
-  }
 
-  traverseDF(fn) {
-    let array = [this.root];
+    // traverseBF(fn) {
+    //     let array = [this.root];
 
-    while (array.length > 0) {
-        let node = array.shift();
+    //     while (array.length > 0) {
+    //         let node = array.shift();
+    //         fn(node);
+    //         for (let child of node.children) {
+    //             array.push(child);
+    //         }
+    //     }
+    // }
+
+    // traverseDF(fn) {
+    //   let array = [this.root];
+
+    //   while (array.length > 0) {
+    //       let node = array.shift();
+    //       fn(node);
+    //       array.unshift(...node.children);
+
+    //   }
+    // }
+
+    traverseBF(fn, current = this.root, siblings = [], children = []) {
+        if (current === null) {
+            return;
+        }
+        console.log(current);
+        fn(current);
+
+        for (let child of current.children) {
+            children.push(child);
+        }
+
+        if (siblings.length > 0) {
+            current = siblings.shift();
+            this.traverseBF(fn, current, siblings, children);
+            return;
+        }
+        if (children.length > 0) {
+            current = children.shift();
+            this.traverseBF(fn, current, children, []);
+        }
+    }
+
+    traverseDF(fn, node = this.root) {
+        if (node === null) {
+            return;
+        }
+
         fn(node);
-        array.unshift(...node.children);
-      
-    }
-  }
 
+        for (let child of node.children) {
+            this.traverseDF(fn, child);
+        }
+    }
 }
 
 module.exports = { Tree, Node };

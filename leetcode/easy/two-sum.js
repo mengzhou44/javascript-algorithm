@@ -1,33 +1,20 @@
-// function hasPairWith(array, sum) {
-//   array = array.sort();
-//   while (array.length > 1) {
-//     if (array[0] + array[array.length - 1] === sum) {
-//       return true;
-//     } else if (array[0] + array[array.length - 1] > sum) {
-//       array.pop();
-//     } else {
-//       array.shift();
-//     }
-//   }
-//   return false;
-// }
-
-// console.log(hasPairWith([2,5,6,9], 16))
-
 var twoSum = function(nums, target) {
-  let  startPos = 0;
-  let endPos = nums.length - 1;
-  while (endPos - startPos > 0) {
-    const sum = nums[startPos] + nums[endPos];
-    if (sum === target) {
-      return [startPos, endPos];
-    } else if (sum > target) {
-      endPos--;
-    } else {
-      startPos++;
-    }
+  let map= {};
+  
+  for(let i=0; i<nums.length; i++) {
+           
+      let  difference = target- nums[i]
+
+      if (map[difference]!== undefined)   {
+           return [i, map[difference]]
+      } else {
+           map[nums[i]] = i;
+      }
   }
-  return [];
+  
+  
+  return []
 };
 
-console.log(twoSum([2, 7, 11, 15], 9));
+
+console.log(twoSum([3,2,4],6))
