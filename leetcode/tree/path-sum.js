@@ -1,0 +1,18 @@
+class TreeNode {
+    constructor(val) {
+        this.val = val
+        this.left = null
+        this.right = null
+    }
+}
+
+function hasPathSum(root, sum) {
+    if (root === null) return false
+
+    if (root.left === null && root.right === null) return root.val === sum
+
+    return (
+        hasPathSum(root.left, sum - root.val) ||
+        hasPathSum(root.right, sum - root.val)
+    )
+}
