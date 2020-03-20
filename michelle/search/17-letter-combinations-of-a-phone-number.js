@@ -48,7 +48,6 @@ function letterCombinations(digits) {
                 result.forEach(item => array.push(item + letter))
             }
             result = array
-            console.log(result)
         }
     }
 
