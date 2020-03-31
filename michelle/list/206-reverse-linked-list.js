@@ -1,4 +1,4 @@
-var reverseList = function(head) {
+ function reverse(head) {
   let prev= null 
   let cur = head 
   let next = null 
