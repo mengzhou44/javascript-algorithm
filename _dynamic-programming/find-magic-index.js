@@ -25,7 +25,7 @@ function findMagicIndex(arr) {
        return findMagicIndex(arr.slice(0,midIndex))
    }
    else {
-      return findMagicIndex(arr.slice(midIndex))
+      return findMagicIndex(arr.slice(midIndex+1))
    }
 }
 
