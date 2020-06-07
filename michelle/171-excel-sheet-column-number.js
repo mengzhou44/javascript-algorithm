@@ -33,6 +33,21 @@ function getValue(c) {
 }
 
 
+
+function  titleToNumber(s) {
+    let result = 0 
+    for(let c of s){
+        result= result *26 + getValue(c)
+    }
+    return result 
+}
+
+function getValue(c) {
+    let index = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').indexOf(c)
+    return index+1
+}
+
+
 function binaryToDecimal(s) {
   let array = s.split('')
   result = 0

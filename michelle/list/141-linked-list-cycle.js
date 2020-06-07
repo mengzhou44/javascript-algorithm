@@ -1,14 +1,16 @@
-var hasCycle = function(head) {
+function hasCycle(head) {
     if (head === null) return false
 
     if (head.next === null) return false
+    if (head.next.next === null) return false
 
-    let fastP = head
-    let slowP = head
-    while (fastP && fastP.next ) {
-        fastP = fastP.next.next
-        slowP = slowP.next
-        if (fastP === slowP) {
+    let slow = head
+    let fast = head
+    while (fast && fast.next) {
+        slow = slow.next
+        fast = fast.next.next
+
+        if (fast === slow) {
             return true
         }
     }

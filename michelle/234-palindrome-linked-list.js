@@ -1,48 +1,38 @@
-var isPalindrome = function(head) {
-    if (head === null) return true
-    if (head.next === null) return true
-    let node = head
-    let array = []
-    while (node) {
-        array.push(node.val)
-        node = node.next
-    }
-
-    let left = 0
-    let right = array.length - 1
-    while (left <= right) {
-        if (array[left] !== array[right]) {
-            return false
-        }
-        left++
-        right--
-    }
-
-    return true
-}
-
-var isPalindrome = function(head) {
-    if (head === null) return true
-    if (head.next === null) return true
+function isPalindrome(head) {
+    if (head === null || head.next === null) return true
 
     let slowP = head
     let fastP = head
-    let stack = []
+
     while (fastP && fastP.next) {
-        stack.push(slowP.val)
         slowP = slowP.next
         fastP = fastP.next.next
     }
 
+    let tail = slowP
+
     if (fastP) {
         slowP = slowP.next
     }
-    while (slowP) {
-        if (slowP.val !== stack.pop()) {
-            return false
-        }
+
+    let temp = reverse(head, tail)
+
+    while (temp) {
+        if (temp.val !== slowP.val) return false
+        temp = temp.next
         slowP = slowP.next
     }
-
     return true
+}
+
+function reverse(head, p) {
+    let current = head
+    let prev = null
+    while (current !== p) {
+        let next = current.next
+        current.next = prev
+        prev = current
+        current = next
+    }
+    return prev
 }

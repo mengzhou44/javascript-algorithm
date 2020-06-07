@@ -1,23 +1,20 @@
 function plusOne(digits) {
-    let result = []
-
-    let digit = digits.pop()
-    while (digit === 9) {
-        result.unshift(0)
-        digit = digits.pop()
+    let addOne = true
+    for (let i = digits.length - 1; i >= 0; i--) {
+        if (addOne) {
+            if (digits[i] < 9) {
+                digits[i]++
+                addOne = false
+            } else {
+                digits[i] = 0
+            }
+        } else {
+            break
+        }
     }
-    if (digit !== undefined) {
-        digit = digit + 1
-    } else {
-        digit = 1
-    }
-
-    result.unshift(digit)
-
-    while (digits.length > 0) {
-        let item = digits.pop()
-        result.unshift(item)
+    if (addOne === true) {
+        digits.unshift(1)
     }
 
-    return result
+    return digits
 }

@@ -1,19 +1,17 @@
 function removeElements(head, val) {
-    if (head === null) return null
-
-    let cur = head
-    let previous = new ListNode(-1)
-    previous.next = head
-
-    let dummy = previous
-
-    while (cur) {
-        if (cur.val !== val) {
-            previous = cur
+    let dummy = new ListNode(-1)
+    dummy.next = head 
+    let current = head
+    let previous = dummy
+    while(current) {
+        if (current.val === val) {
+             previous.next =current.next
         } else {
-            previous.next = cur.next
+             previous = current
         }
-        cur = cur.next
-    }
-    return dummy.next
+        current = current.next 
+    } 
+    
+    return dummy.next 
+
 }

@@ -1,34 +1,70 @@
-var searchMatrix = function(matrix, target) {
-    let temp = []
-    for (let row = 0; row < matrix.length; row++) {
-        for (let col = 0; col < matrix[0].length; col++) {
-            temp.push(matrix[row][col])
+function searchMatrix(matrix, target) {
+    
+    if (matrix === null || matrix.length === 0) return  false 
+    
+    let low= 0
+    let m = matrix.length 
+    let n = matrix[0].length 
+    let high = m*n -1 
+    
+    while(low<=high) {
+        let mid = Math.floor((low+high)/2)
+        let midValue= matrix[Math.floor(mid/n)][mid%n]
+        if (midValue === target) {
+            return true 
+        }else if (midValue<target){
+            low=mid+1
+        }else {
+            high= mid -1 
         }
     }
-    return findTarget(temp, target)
+    return false 
 }
 
-function findTarget(array, target) {
-    if (array === null || array.length === 0) return false
-    if (array.length === 1) {
-        return array[0] === target
-    }
+// ********************
+function searchMatrix(matrix, target) {
+    if (matrix.length === 0) return false
+    let rowIndex = findRowIndex(matrix, target)
+    if (rowIndex >= matrix.length) return false
+    return searchTargetInRow(rowIndex, matrix, target)
+}
 
-    let start = 0
-    let end = array.length - 1
+function searchTargetInRow(row, matrix, target) {
+    let left = 0
+    let right = matrix[0].length - 1
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2)
 
-    while (start < end) {
-        let mid = Math.floor((start + end) / 2)
-        if (array[mid] === target) {
+        if (matrix[row][mid] === target) {
             return true
-        } else if (array[mid] > target) {
-            end = mid - 1
+        } else if (matrix[row][mid] < target) {
+            left = mid + 1
         } else {
-            start = mid + 1
+            right = mid - 1
         }
     }
-    if (array[start] === target || array[end] === target) {
-        return true
-    }
     return false
+}
+
+function findRowIndex(matrix, target) {
+    let left = 0
+    let right = matrix.length - 1
+    let n = matrix[0].length
+    while (left < right) {
+        let mid = Math.floor((left + right) / 2)
+        if (matrix[mid][n - 1] === target) {
+            console.log('step3')
+            return mid
+        } else if (matrix[mid][n - 1] < target) {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+
+    if (matrix[left][n - 1] >= target) {
+        return left
+    }
+
+    return left + 1
 }

@@ -1,4 +1,4 @@
-var smallestDistancePair = function(nums, k) {
+var smallestDistancePair = function (nums, k) {
     nums = nums.sort((a, b) => a - b)
     let l = 0
     let r = nums[nums.length - 1] - nums[0]

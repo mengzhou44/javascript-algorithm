@@ -14,3 +14,20 @@ function isIsomorphic(s, t) {
     }
     return true
 }
+
+function isIsomorphic(s, t) {
+    let map = new Map()
+    for (let i = 0; i < s.length; i++) {
+        if (!map.has(s[i])) {
+            if (Array.from(map.values()).includes(t[i])) {
+                return false
+            }
+            map.set(s[i], t[i])
+        } else {
+            if (map.get(s[i]) !== t[i]) {
+                return false
+            }
+        }
+    }
+    return true
+}

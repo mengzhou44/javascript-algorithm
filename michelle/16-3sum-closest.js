@@ -1,55 +1,27 @@
-var threeSumClosest = function(nums, target) {
-    if (nums.length < 3) throw new Error()
+function threeSumClosest(nums, target) {
+    nums = nums.sort((a, b) => a - b)
+    let result = nums[0] + nums[1] + nums[nums.length - 1]
 
-    let result = helper(nums, target)
-    console.log('result', result)
-    return sum(result)
-}
+    for (let i = 0; i < nums.length - 2; i++) {
+        let l = i + 1
+        let r = nums.length - 1
 
-function helper(nums, target) {
-    if (nums.length === 3) return nums
+        while (l < r) {
+            let sum = nums[i] + nums[l] + nums[r]
+            if (sum === target) {
+                return target
+            }
 
-    let first = nums.shift()
-
-    let array = [...helper(nums, target), first]
-
-    let minSum
-    let results = []
-
-    for (let i = 0; i < array.length; i++) {
-        let temp = createSubArray(i, array)
-        let total = sum(temp)
-
-        if (minSum === undefined) {
-            minSum = total
-            results = temp
-        } else {
-            let value1 = Math.abs(total - target)
-            let value2 = Math.abs(minSum - target)
-
-            if (value1 < value2) {
-                minSum = total
-                results = temp
+            if (Math.abs(target - sum) < Math.abs(target - result)) {
+                result = sum
+            }
+            if (sum > target) {
+                r--
+            } else {
+                l++
             }
         }
     }
 
-    return results
+    return result
 }
-
-function createSubArray(index, array) {
-    let temp = []
-    for (let i = 0; i < array.length; i++) {
-        if (i !== index) {
-            temp.push(array[i])
-        }
-    }
-
-    return temp
-}
-
-function sum(array) {
-   return array.reduce((sum, item)=> sum+ item, 0)
-}
-
-console.log(threeSumClosest([-1, 2, 1, -4], 1))

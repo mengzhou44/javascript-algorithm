@@ -1,27 +1,29 @@
-function  merge(intervals) {
-    if (intervals.length < 2) return intervals
-
-    intervals = intervals.sort((a, b) => a[0] - b[0])
-
-    let result = [intervals[0]]
-
-    for (let i = 1; i < intervals.length; i++) {
-        mergeOverlap(result, intervals[i])
-    }
-
-    return result
+/**
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+function merge(intervals) {
+    if (intervals.length === 0)  return []
+    
+     intervals.sort((a,b)=> a[0]-b[0]) 
+    
+     let result =[] 
+     
+     result.push(intervals.shift())
+     
+     while(intervals.length>0) {
+         let next = intervals.shift()
+         let current = result[result.length-1]
+         if (current[1]<next[0]) {
+             result.push(next)
+         } else {
+             if (current[1]<next[1]) {
+                 result.pop()
+                 result.push([current[0],next[1]])
+             }
+         }
+     }
+     return  result 
 }
-
-function mergeOverlap(result, current) {
-    let previous = result.pop()
-
-    if (previous[1] >= current[1]) {
-        result.push(previous)
-    } else if (previous[1] >= current[0]) {
-        let temp = [previous[0], current[1]]
-        result.push(temp)
-    } else {
-        result.push(previous)
-        result.push(current)
-    }
-}
+    
+    

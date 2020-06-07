@@ -1,20 +1,20 @@
 function groupAnagrams(strs) {
-    let map = {}
+    let map = new Map()
 
     for (let word of strs) {
         let pattern = word
             .split('')
             .sort()
             .join('')
-        if (map[pattern] === undefined) {
-            map[pattern] = [word]
+        if (!map.has(pattern)) {
+            map.set(pattern, [word])
         } else {
-            map[pattern].push(word)
+            map.get(pattern).push(word)
         }
     }
 
     let result = []
-    for (let item of Object.values(map)) {
+    for (let item of map.values()) {
         result.push(item)
     }
 

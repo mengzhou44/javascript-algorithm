@@ -1,39 +1,43 @@
 function zigzagLevelOrder(root) {
-    function addLevelToResult(array, result) {
-        if (array.length > 0) {
-            if (toRight) {
-                result.push(array)
-            } else {
-                result.push(array.reverse())
-            }
-        }
-    }
-
     if (root === null) return []
     let array = [root]
-    let result = [[root.val]]
-    let toRight = false
+    let direction = 'lr'
+    let result = []
     while (array.length > 0) {
         let levelSize = array.length
         let count = 0
-
+        let level = []
         while (count < levelSize) {
-            let item = array.shift()
-
-            if (item.left !== null) {
-                array.push(item.left)
-            }
-
-            if (item.right !== null) {
-                array.push(item.right)
+            let node = array.shift()
+            if (node !== null) {
+                if (direction === 'lr') {
+                    level.push(node.val)
+                } else {
+                    level.unshift(node.val)
+                }
+                addChildrenToArray(array, node)
             }
             count++
         }
-
-        addLevelToResult(array, result)
-
-        toRight = !toRight
+        direction = changeDirection(direction)
+        result.push(level)
     }
 
     return result
+}
+
+function addChildrenToArray(array, node) {
+    if (node.left !== null) {
+        array.push(node.left)
+    }
+    if (node.right !== null) {
+        array.push(node.right)
+    }
+}
+
+function changeDirection(direction) {
+    if (direction === 'lr') {
+        return 'rl'
+    }
+    return 'lr'
 }

@@ -1,4 +1,4 @@
-var convertToTitle = function(n) {
+function convertToTitle(n) {
     let result = []
 
     while (n > 0) {
@@ -10,7 +10,6 @@ var convertToTitle = function(n) {
     return result.join('')
 }
 
-function getLetter(n) {
-    let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    return letters[n]
+function getLetter(number) {
+    return String.fromCharCode(number + 65)
 }

@@ -1,45 +1,41 @@
 function kthSmallest(matrix, k) {
-    let array = []
-    for (let col = 0; col < matrix.length; col++) {
-        let temp = []
-        for (let row = 0; row < matrix.length; row++) {
-            temp.push(matrix[row][col])
+    let m= matrix.length
+    let n = matrix[0].length
+    let l = matrix[0][0]
+    let r = matrix[m-1][n-1]+1
+    while(l<r) {
+        let mid = Math.floor((l+r)/2)
+        let count = findXSmallest(mid, matrix)
+      
+        if (count<k) {
+             l= mid+1
+        }else {
+            r=mid
         }
-        array.push(temp)
     }
-
-    while (true) {
-        let smallest = removeSmallest(array)
-        k = k - 1
-        if (k === 0) return smallest
-    }
+  
+     return l 
 }
 
-function removeSmallest(array) {
-    let smallest
-    let selectedCol
-    for (let col of array) {
-        if (col.length > 0) {
-            if (smallest === undefined) {
-                smallest = col[0]
-                selectedCol = col
-            } else {
-                smallest = Math.min(smallest, col[0])
-                if (smallest === col[0]) {
-                    selectedCol = col
-                }
+function findXSmallest(target, matrix) {
+       
+        let count = 0
+        let m= matrix.length
+        for(let row =0; row<m; row++) {
+           let j= matrix[0].length-1
+            while(j>=0 && matrix[row][j]> target) {
+                j--
             }
-        }
-    }
-
-    selectedCol.shift()
-
-    return smallest
+            count= count+j+1
+         }
+       
+        return count
+        
 }
 
 
 
-*************
+******************************
 
 
 function kthSmallest(matrix, k) {

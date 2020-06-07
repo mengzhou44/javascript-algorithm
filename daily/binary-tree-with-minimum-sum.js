@@ -8,7 +8,7 @@ class TreeNode {
 
 function minimumLevelSum(root) {
 
-   let result = root.val 
+   let result = Number.MAX_SAFE_INTEGER
    let array = [root]
    while(array.length>0) {
        let levelSize = array.length 

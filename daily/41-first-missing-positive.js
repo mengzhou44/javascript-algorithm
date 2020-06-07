@@ -1,4 +1,4 @@
-var firstMissingPositive = function(nums) {
+function firstMissingPositive(nums) {
     let positives = nums.filter(item => item > 0).sort((a, b) => a - b)
 
     if (positives.length === 0) return 1

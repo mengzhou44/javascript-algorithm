@@ -1,22 +1,25 @@
 function countAndSay(n) {
     if (n === 1) return '1'
-    let seq = countAndSay(n - 1)
-    return getNextSeq(seq)
+    let temp = countAndSay(n - 1)
+    return generateResult(temp)
 }
 
-function getNextSeq(seq) {
-    let count = 0
-    let val = seq[0]
-    let result = ''
-    for (let i = 0; i < seq.length; i++) {
-        if (seq[i] === val) {
+function generateResult(str) {
+    let array = str.split('')
+    let result = []
+    let count = 1
+    let current = array.shift()
+    while (array.length > 0) {
+        let next = array.shift()
+        if (next === current) {
             count++
         } else {
-            result += count + val
-            val = seq[i]
+            result.push(count)
+            result.push(current)
+            current = next
             count = 1
         }
     }
-    result += count + val
-    return result
+    result.push(count, current)
+    return result.join('')
 }

@@ -1,15 +1,5 @@
 function  singleNumber(nums) {
   if (nums.length === 1)  return nums[0]
-   
-  let result = nums.pop()
-   while(nums.length>0) {
-       result= result ^ nums.pop()
-   }
-   return result 
-};
- 
-function  singleNumber(nums) {
-  if (nums.length === 1)  return nums[0]
   let result = nums[0] 
   for(let i=1; i<nums.length; i++) {
       result = result ^nums[i]
@@ -29,3 +19,11 @@ function  singleNumber(nums) {
   }
    return array[0] 
 };
+
+function  singleNumber(nums) {
+    let result = 0 
+    for(let num of nums) {
+        result ^=num
+    }
+    return result
+}
