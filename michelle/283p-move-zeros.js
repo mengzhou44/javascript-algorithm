@@ -3,19 +3,19 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 function moveZeroes(nums) {
-    if (nums.length < 2) return nums
-    let first = nums.shift()
-    nums = moveZeroes(nums)
-    if (first === 0) {
-        nums.push(0)
-    } else {
-        nums.unshift(first)
-    }
-    return nums
+  if (nums.length < 2) return
+  let first = nums.shift()
+  moveZeroes(nums)
+
+  if (first === 0) {
+      nums.push(0)
+  } else {
+      nums.unshift(first)
+  }
+ 
 }
 
-
-********
+********]
 
 function moveZeroes(nums){
   let left = 0
@@ -32,19 +32,15 @@ function moveZeroes(nums){
 
 function moveZeroToEnd(index, nums) {
   for(let i=index; i<nums.length-1; i++) {
-       swap(i,i+1, nums)
-  }
+      nums[i] = nums[i+1]
+   }
+   nums[nums.length-1] = 0
 }
-
-function swap(i, j, nums) {
-  let temp = nums[i]
-  nums[i] = nums[j]
-  nums[j] = temp
-}
-
+ 
 
 
 ***********
+
 function moveZeroes(nums){
   let pos= 0
   for(let i=0; i<nums.length; i++) {
@@ -60,4 +56,27 @@ function moveZeroes(nums){
   } 
    return nums
 }
+
+**********
+
+function moveZeroes(nums){
+  let bound = nums.length-1
+  let index = 0 
+  while(index<=bound) {
+       if (nums[index] === 0){
+           for(let j=index; j<=bound; j++) {
+               nums[j]= nums[j+1]
+           }
+           nums[bound]=0
+           bound--
+           continue
+       }
+      
+      index++
+  }
+}
+
+
+
+
 

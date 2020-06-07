@@ -36,6 +36,28 @@ function shortestDistance(words, word1, word2) {
 //       return shortest
 // }
 
+ function shortestDistance(words, word1, word2) {
+     let array1=[]
+     let array2 =[]
+     for(let i=0; i<words.length; i++) {
+         if (words[i] === word1) {
+             array1.push(i)
+         } else if (words[i] === word2) {
+             array2.push(i)
+         }
+     }
+    
+     let minDistance =words.length
+     for(let i of array1) {
+           let temp = array2.map(item=> Math.abs(item- i)).sort((a,b)=> a-b)
+           minDistance = Math.min(temp[0],minDistance)
+     }
+
+     return minDistance 
+
+ }
+
+
 
 let words= ['practices', 'makes', 'perfect', 'coding', 'makes']
 let word1='coding'

@@ -1,21 +1,24 @@
 function isStroboprogramatic(str) {
-    for (let c of str) {
-        if (!['0', '1', '6', '8', '9'].includes(c)) {
-            return false
+     let digits = '01689'.split('')
+     let temp =[]
+     for(let c of str) {
+        if (!digits.includes(c)) {
+            return false 
         }
-    }
-    let result = []
-    for (let c of str) {
-        if (c === '0' || c === '1' || c === '8') {
-            result.unshift(c)
-        } else if (c === '6') {
-            result.unshift('9')
+        if (c==='6' ) {
+            temp.unshift('9')
+        }
+        else if (c==='9' ) {
+            temp.unshift('6')
         } else {
-            result.unshift('6')
+            temp.unshift(c)
         }
-    }
+     }
 
-    return result.join('') === str
+     return temp.join('')=== str
+
 }
 
- 
+console.log(isStroboprogramatic('69'))
+console.log(isStroboprogramatic('88'))
+console.log(isStroboprogramatic('962'))
