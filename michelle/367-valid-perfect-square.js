@@ -17,3 +17,13 @@ var isPerfectSquare = function(num) {
 
     return false
 }
+
+
+function  isPerfectSquare(num) {
+    if (num ===1 )  return true 
+    let start = 2
+    while(start*start<num) {
+        start++
+    }
+    return start *start === num
+}

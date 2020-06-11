@@ -1,4 +1,4 @@
-var intersect = function(nums1, nums2) {
+var intersect = function (nums1, nums2) {
     nums1 = nums1.sort((a, b) => a - b)
     nums2 = nums2.sort((a, b) => a - b)
 
@@ -18,7 +18,7 @@ var intersect = function(nums1, nums2) {
 
     return output
 }
-var intersect = function(nums1, nums2) {
+var intersect = function (nums1, nums2) {
     if (nums1.length > nums2.length) {
         return intersect(nums2, nums1)
     }
@@ -48,4 +48,38 @@ function decreaseCount(map, num) {
     } else {
         map.set(num, count - 1)
     }
+}
+
+function intersect(nums1, nums2) {
+    if (nums1.length > nums2.length) {
+        return intersect(nums2, nums1)
+    }
+
+    let result = []
+    while (nums1.length > 0 && nums2.length > 0) {
+        let num = nums1.shift()
+        let index = nums2.indexOf(num)
+        if (index !== -1) {
+            result.push(num)
+            nums2 = [...nums2.slice(0, index), ...nums2.slice(index + 1)]
+        }
+    }
+    return result
+}
+
+function intersect(nums1, nums2) {
+    if (nums1.length > nums2.length) {
+        return intersect(nums2, nums1)
+    }
+
+    let result = []
+    while (nums1.length > 0 && nums2.length > 0) {
+        let num = nums1.shift()
+        let index = nums2.indexOf(num)
+        if (index !== -1) {
+            result.push(num)
+            nums2[index] = null
+        }
+    }
+    return result
 }

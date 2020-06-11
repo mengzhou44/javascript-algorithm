@@ -7,7 +7,7 @@ var longestPalindrome = function(s) {
             map[c] = 1
         }
     }
-
+    
     let temp = 0
     let mark = 0
     for (let key of Object.keys(map)) {

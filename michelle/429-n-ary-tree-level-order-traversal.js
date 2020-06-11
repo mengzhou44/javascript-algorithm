@@ -1,24 +1,20 @@
-var levelOrder = function(root) {
+function levelOrder(root) {
     if (root === null) return []
-    let cur = [root]
-
-    let result = [[root.val]]
-    while (cur.length > 0) {
-        let next = []
+    let result = []
+    let array = [root]
+    while (array.length > 0) {
+        let levelSize = array.length
+        let count = 0
         let level = []
-        let levelSize = cur.length
-        for (let i = 0; i < levelSize; i++) {
-            let node = cur.shift()
+        while (count < levelSize) {
+            let node = array.shift()
             for (let child of node.children) {
-                level.push(child.val)
-                next.push(child)
+                array.push(child)
             }
+            level.push(node.val)
+            count++
         }
-        if (level.length > 0) {
-            result.push(level)
-        }
-
-        cur = next
+        result.push(level)
     }
 
     return result
