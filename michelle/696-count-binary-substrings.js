@@ -1,30 +1,28 @@
-var countBinarySubstrings = function (s) {
+/**
+ * @param {string} s
+ * @return {number}
+ */
+function countBinarySubstrings(s) {
     let count = 0
-    for (let i = 0; i < s.length; i++) {
-        if (s[i] === '1' && s[i + 1] === '0') {
-            count += findContinuousSize(s, i)
-        } else if (s[i] === '0' && s[i + 1] === '1') {
+    for (let i = 0; i < s.length - 1; i++) {
+        if (s[i] != s[i + 1]) {
             count += findContinuousSize(s, i)
         }
     }
-
     return count
 }
 
 function findContinuousSize(s, i) {
+    let count = 0
     let left = i
     let right = i + 1
-    let count = 0
-
     while (left >= 0 && right < s.length) {
-        if (s[left] === s[i] && s[right] === s[i + 1]) {
-            left--
-            right++
-            count++
-        } else {
+        if (s[left] !== s[i] || s[right] !== s[i + 1]) {
             break
         }
+        left--
+        right++
+        count++
     }
-
     return count
 }

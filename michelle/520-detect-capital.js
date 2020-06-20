@@ -1,4 +1,4 @@
-var detectCapitalUse = function(word) {
+function detectCapitalUse(word) {
     if (word.toUpperCase() === word) {
         return true
     } else {

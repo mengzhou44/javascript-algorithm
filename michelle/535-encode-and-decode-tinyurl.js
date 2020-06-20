@@ -37,3 +37,34 @@ var decode = function(shortUrl) {
  * Your functions will be called as such:
  * decode(encode(url));
  */
+
+ *******
+ let map = new Map()
+ 
+function encode(longUrl) {
+    let hash=0
+    for(let i=0; i<longUrl.length; i++) {
+        hash = (hash<<5) -hash + longUrl.charCodeAt(i)|0 
+    }
+    
+    let temp = hash.toString().split('').filter(item=> item!=='-')
+   
+    let shortUrl = temp.map(item=> String.fromCharCode(97+parseInt(item))).join('')
+    map.set(shortUrl, longUrl)
+    
+    return shortUrl
+}
+
+
+/**
+ * Decodes a shortened URL to its original URL.
+ *
+ * @param {string} shortUrl
+ * @return {string}
+ */
+function decode(shortUrl) {
+    console.log(shortUrl)
+    return map.get(shortUrl)     
+}
+
+ 

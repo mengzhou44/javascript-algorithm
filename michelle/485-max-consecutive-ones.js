@@ -1,15 +1,18 @@
-var findMaxConsecutiveOnes = function(nums) {
-    let result = 0
-    let consecutiveOnes = 0
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+function findMaxConsecutiveOnes(nums) {
+    let maxOnes = 0
+    let count = 0
+
     for (let num of nums) {
         if (num === 0) {
-            result = Math.max(consecutiveOnes, result)
-            consecutiveOnes = 0
+            maxOnes = Math.max(maxOnes, count)
+            count = 0
         } else {
-            consecutiveOnes++
+            count++
         }
     }
-
-    result = Math.max(consecutiveOnes, result)
-    return result
+    return Math.max(maxOnes, count)
 }

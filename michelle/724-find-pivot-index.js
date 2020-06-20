@@ -1,13 +1,14 @@
 function pivotIndex(nums) {
-    let total = nums.reduce((sum, item) => sum + item, 0)
-    let sum = 0
-    for (let i = 0; i < nums.length; i++) {
-        if ((total - nums[i]) % 2 === 0 && sum === (total - nums[i]) / 2) {
-            return i
-        } else {
-            sum += nums[i]
+    if (nums.length === 0) return -1
+    let sum = nums.reduce((sum, item) => sum + item)
+    let index = 0
+    let previousSum = 0
+    while (index < nums.length) {
+        if (previousSum * 2 === sum - nums[index]) {
+            return index
         }
+        previousSum += nums[index]
+        index++
     }
-
     return -1
 }
