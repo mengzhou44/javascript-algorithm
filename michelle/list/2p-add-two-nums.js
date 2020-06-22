@@ -7,25 +7,29 @@ class ListNode {
 
 function addTwoNumbers(l1, l2) {
     let dummy = new ListNode(-1)
-    let head = dummy
+    let current = dummy
+    let p1 = l1
+    let p2 = l2
     let carry = 0
-    while (l1 || l2) {
+    while (p1 || p2) {
         let sum = carry
-        if (l1 !== null) {
-            sum += l1.val
-            l1 = l1.next
+        if (p1) {
+            sum += p1.val
+            p1 = p1.next
         }
-        if (l2 !== null) {
-            sum += l2.val
-            l2 = l2.next
+        if (p2) {
+            sum += p2.val
+            p2 = p2.next
         }
-        dummy.next = new ListNode(sum % 10)
-        dummy = dummy.next
 
+        current.next = new ListNode(sum % 10)
         carry = Math.floor(sum / 10)
+        current = current.next
     }
-    if (carry > 0) {
-        dummy.next = new ListNode(carry)
+
+    if (carry === 1) {
+        current.next = new ListNode(1)
     }
-    return head.next
+
+    return dummy.next
 }

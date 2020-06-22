@@ -1,6 +1,17 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} key
+ * @return {TreeNode}
+ */
 function deleteNode(root, key) {
-    if (root === null) return root
-
+    if (root === null) return null
     if (root.val > key) {
         root.left = deleteNode(root.left, key)
     } else if (root.val < key) {
@@ -22,16 +33,9 @@ function deleteNode(root, key) {
 }
 
 function findMinNode(root) {
-    let minNode = null
-    function dfs(root) {
-        if (root === null) return
-        if (root.left !== null) {
-            dfs(root.left)
-        } else {
-            minNode = root
-        }
+    let current = root
+    while (current.left !== null) {
+        current = current.left
     }
-    dfs(root)
-
-    return minNode
+    return current
 }
