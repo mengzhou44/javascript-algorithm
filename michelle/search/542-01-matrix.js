@@ -1,85 +1,48 @@
 function updateMatrix(matrix) {
-    let result = []
-    for (let row = 0; row < matrix.length; row++) {
-        let temp = []
-        for (let col = 0; col < matrix[0].length; col++) {
-            if (matrix[row][col] === 0) {
-                temp.push(0)
-            } else {
-                temp.push(1)
-            }
-        }
-        result.push(temp)
+    let result = new Array(matrix.length)
+    for (let i = 0; i < matrix.length; i++) {
+        result[i] = new Array(matrix[0].length).fill(0)
     }
 
     for (let row = 0; row < matrix.length; row++) {
         for (let col = 0; col < matrix[0].length; col++) {
-            if (result[row][col] === 1) {
-                result[row][col] = findMiniDistance(row, col, matrix)
-            }
+            result[row][col] = findMinDistances(matrix, row, col)
         }
     }
-
     return result
 }
 
-function findMiniDistance(row, col, matrix) {
-    let array = [[row, col]]
-    let levelSize = 1
-    let level = 0
-
-    function findChildren(row, col) {
-        let children = []
-        if (!isOutOfRange(row + 1, col)) {
-            children.push([row + 1, col])
-        }
-
-        if (!isOutOfRange(row - 1, col)) {
-            children.push([row - 1, col])
-        }
-
-        if (!isOutOfRange(row, col + 1)) {
-            children.push([row, col + 1])
-        }
-
-        if (!isOutOfRange(row, col - 1)) {
-            children.push([row, col - 1])
-        }
-
-        return children
-    }
-
-    function isOutOfRange(row, col) {
-        if (
-            row >= matrix.length ||
-            row < 0 ||
-            col >= matrix[0].length ||
-            col < 0
-        )
-            return true
-
-        return false
-    }
-
+function findMinDistances(matrix, i, j) {
+    if (matrix[i][j] === 0) return 0
+    let array = [[i, j]]
+    let distance = 0
     while (array.length > 0) {
+        let levelSize = array.length
         let count = 0
         while (count < levelSize) {
-            let item = array.shift()
-            let i = item[0]
-            let j = item[1]
+            let [row, col] = array.shift()
 
-            if (matrix[i][j] === 0) return level
-
-            let children = findChildren(i, j)
-
-            for (child of children) {
-                array.push(child)
+            if (matrix[row][col] === 0) {
+                return distance
             }
+            addToArray(array, row + 1, col)
+            addToArray(array, row - 1, col)
+            addToArray(array, row, col + 1)
+            addToArray(array, row, col - 1)
             count++
         }
-        levelSize = array.length
-        level++
+
+        distance++
     }
 
-    return level
+    function addToArray(array, row, col) {
+        if (
+            row >= 0 &&
+            row < matrix.length &&
+            col >= 0 &&
+            col < matrix[0].length
+        ) {
+            array.push([row, col])
+        }
+    }
 }
