@@ -1,56 +1,57 @@
-function calcEquation(equations, values, queries) {
-    let temp = []
-    equations.map(([a, b], index) => {
-        temp.push([a, b, values[index]])
-        temp.push([b, a, 1 / values[index]])
-    })
+/**
+ * @param {string[][]} equations
+ * @param {number[]} values
+ * @param {string[][]} queries
+ * @return {number[]}
+ */
 
-    let map = {}
-    for (let [a, b, value] of temp) {
-        if (map[a] === undefined) {
-            map[a] = [{ variable: b, value }]
-        } else {
-            map[a].push({ variable: b, value })
-        }
+function calcEquation(equations, values, queries) {
+    let map = new Map()
+    let index = 0
+    for (let [a, b] of equations) {
+        let edges1 = getEdges(map, a)
+        edges1.push({ from: a, to: b, weight: values[index] })
+
+        let edges2 = getEdges(map, b)
+        edges2.push({ from: b, to: a, weight: 1 / values[index] })
+
+        index++
     }
 
     let result = []
-    for (let query of queries) {
-        result.push(calculate(map, query))
+    for (let [a, b] of queries) {
+        result.push(dfs(a, b))
     }
     return result
-}
 
-function calculate(map, query) {
-    if (map[query[0]] === undefined) {
-        return -1
-    }
-    if (query[0] === query[1]) return 1.0
+    function dfs(a, b, visited = new Set()) {
+        if (!map.has(a) || !map.has(b)) {
+            return -1
+        }
+        if (visited.has(a)) {
+            return -1
+        }
+        visited.add(a)
+        if (a === b) {
+            return 1
+        }
+        let edges = getEdges(map, a)
 
-    let result = 1
-    let path = [query[0]]
-    return dfs(map, query, result, path)
-}
-
-function dfs(map, query, result, path) {
-    if (map[query[0]] === undefined) {
-        return -1
-    }
-
-    for (let { variable, value } of map[query[0]]) {
-        if (variable === query[1]) {
-            return result * value
-        } else {
-            if (!path.includes(variable)) {
-                path.push(variable)
-                let temp = dfs(map, [variable, query[1]], result * value, path)
+        for (let { to, weight } of edges) {
+            if (!visited.has(to)) {
+                let temp = dfs(to, b, visited)
                 if (temp !== -1) {
-                    return temp
+                    return weight * temp
                 }
-                path.pop()
             }
         }
+        return -1
     }
+}
 
-    return -1
+function getEdges(map, node) {
+    if (!map.has(node)) {
+        map.set(node, [])
+    }
+    return map.get(node)
 }

@@ -1,20 +1,15 @@
 function cloneGraph(node) {
+    if (node === null) return null
     let map = new Map()
+    return dfs(node)
 
-    function dfs(node, map) {
-        if (node === null) return null
-
+    function dfs(node) {
         if (map.has(node.val)) return map.get(node.val)
-
-        let cloned = new Node(node.val)
+        let cloned = new Node(node.val, [])
         map.set(node.val, cloned)
-
         for (let item of node.neighbors) {
-            cloned.neighbors.push(dfs(item, map))
+            cloned.neighbors.push(dfs(item))
         }
-
         return cloned
     }
-
-    return dfs(node, map)
 }

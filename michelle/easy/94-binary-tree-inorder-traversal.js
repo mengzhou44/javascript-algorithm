@@ -31,3 +31,10 @@ function inorderTraversal(root) {
 
     return result
 }
+
+function inorderTraversal(root) {
+    if (root === null) return []
+    let array1 = inorderTraversal(root.left)
+    let array2 = inorderTraversal(root.right)
+    return [...array1, root.val, ...array2]
+}

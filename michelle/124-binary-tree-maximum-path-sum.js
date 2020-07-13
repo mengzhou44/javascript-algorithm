@@ -1,18 +1,16 @@
 function maxPathSum(root) {
-    let result = Number.MIN_SAFE_INTEGER
+    let max = Number.MIN_SAFE_INTEGER
+
+    helper(root)
+    return max
 
     function helper(root) {
         if (root === null) return 0
         let l = Math.max(0, helper(root.left))
         let r = Math.max(0, helper(root.right))
 
-        let sum = root.val + l + r
-        result = Math.max(result, sum)
+        max = Math.max(max, l + r + root.val)
 
         return root.val + Math.max(l, r)
     }
-
-    helper(root)
-
-    return result
 }

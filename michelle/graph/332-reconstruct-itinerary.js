@@ -1,53 +1,82 @@
+/**
+ * @param {string[][]} tickets
+ * @return {string[]}
+ */
 function findItinerary(tickets) {
-    let map = {}
+    let map = new Map()
     let n = tickets.length + 1
-    for (const [from, to] of tickets) {
-        if (map[from] === undefined) {
-            map[from] = [to]
+    for (let ticket of tickets) {
+        if (!map.has(ticket[0])) {
+            map.set(ticket[0], [ticket[1]])
         } else {
-            let list = map[from]
-            list.push(to)
-            map[from] = list
+            let destinations = map.get(ticket[0])
+            destinations.push(ticket[1])
+            destinations.sort()
         }
     }
 
-    Object.values(map).map((list) => list.sort())
+    let path = ['JFK']
 
-    let result = ['JFK']
-    if (dfs(result, map, n, 'JFK')) {
-        return result
+    if (dfs('JFK', path, map)) {
+        return path
     }
 
     return []
+
+    function dfs(current, path, map) {
+        if (path.length === n) return true
+        if (!map.has(current)) return false
+        let destinations = map.get(current)
+
+        if (destinations.length === 0) return false
+
+        for (let i = 0; i < destinations.length; i++) {
+            path.push(destinations[i])
+            let filtered = destinations.filter((item, index) => index !== i)
+            map.set(current, filtered)
+            if (dfs(destinations[i], path, map)) {
+                return true
+            }
+            map.set(current, destinations)
+            path.pop()
+        }
+
+        return false
+    }
 }
 
-function dfs(result, map, n, start) {
-    if (result.length === n) return true
-    if (map[start] === undefined) return false
-    const cloned = [...map[start]]
 
-    for (let i = 0; i < map[start].length; i++) {
-        const des = map[start][i]
+*******
 
-        result.push(des)
-        map[start] = removeElement(map[start], i)
-
-        if (dfs(result, map, n, des)) {
-            return true
-        }
-        result.pop()
-        map[start] = cloned
+function findItinerary(tickets) {
+    let map = new Map()
+    for(let [from,to] of tickets) {
+         if (!map.has(from)) {
+             map.set(from, [to])
+         } else {
+             let temp = map.get(from)
+             temp.push(to)
+             temp.sort()
+         }
     }
-
-    return false
-}
-
-function removeElement(array, index) {
-    let result = []
-    for (i = 0; i < array.length; i++) {
-        if (i !== index) {
-            result.push(array[i])
-        }
-    }
-    return result
+    let path = [] 
+    
+    dfs('JFK', path, map)
+   
+    return path
+   
+    function dfs(from,  path, map) {
+         
+         let destinations = map.get(from)  
+        
+         if (destinations!== undefined) {
+               while(destinations.length> 0) {
+                     let dest = destinations.shift()
+                     dfs(dest, path, map)
+              }
+         }
+        
+         path.unshift(from)
+    } 
+   
 }

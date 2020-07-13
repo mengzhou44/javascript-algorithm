@@ -1,35 +1,35 @@
 function networkDelayTime(times, N, K) {
-    let graph = new Map()
+    let timesTable = new Map()
     for (let i = 1; i <= N; i++) {
-        graph.set(i, [])
-    }
-    for (let [u, v, time] of times) {
-        let list = graph.get(u)
-        list.push([v, time])
-        list = list.sort((a, b) => a[1] - b[1])
+        timesTable.set(i, { time: Number.MAX_SAFE_INTEGER, parent: null })
     }
 
-    const INF = Number.MAX_SAFE_INTEGER
-    let travelTimeList = new Array(N).fill(INF)
+    timesTable.set(K, { time: 0, parent: null })
 
-    function dfs(node, timeSpent) {
-        let index = node - 1
-        if (timeSpent >= travelTimeList[index]) {
-            return
+    let visited = new Set()
+    let queue = [{ node: K, priority: 0 }]
+
+    while (queue.length > 0) {
+        let current = queue.shift().node
+        visited.add(current)
+
+        for (let [from, to, time] of times) {
+            if (from === current) {
+                let temp = timesTable.get(current).time + time
+                if (temp < timesTable.get(to).time) {
+                    timesTable.set(to, { time: temp, parent: current })
+                    queue.push({ node: to, prioity: temp })
+                    queue.sort((a, b) => a.priority - b.priority)
+                }
+            }
         }
-        travelTimeList[index] = timeSpent
-        for (let [next, time] of graph.get(node)) {
-            dfs(next, timeSpent + time)
-        }
     }
 
-    dfs(K, 0)
-
-    let result = travelTimeList[0]
-    for (let item of travelTimeList) {
-        result = Math.max(result, item)
+    let result = -1
+    for (let { time } of timesTable.values()) {
+        result = Math.max(result, time)
     }
+    if (result === Number.MAX_SAFE_INTEGER) return -1
 
-    if (result === INF) return -1
     return result
 }
