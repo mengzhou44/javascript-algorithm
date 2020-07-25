@@ -1,27 +1,24 @@
 function threeSumClosest(nums, target) {
     nums = nums.sort((a, b) => a - b)
-    let result = nums[0] + nums[1] + nums[nums.length - 1]
+    let result = Number.MAX_SAFE_INTEGER
+    for (let i = 0; i < nums.length; i++) {
+        let temp = nums.filter((item, index) => index !== i)
 
-    for (let i = 0; i < nums.length - 2; i++) {
-        let l = i + 1
-        let r = nums.length - 1
+        let left = 0
+        let right = temp.length - 1
 
-        while (l < r) {
-            let sum = nums[i] + nums[l] + nums[r]
-            if (sum === target) {
-                return target
-            }
+        while (left < right) {
+            let sum = temp[left] + temp[right] + nums[i]
 
-            if (Math.abs(target - sum) < Math.abs(target - result)) {
+            if (Math.abs(sum - target) < Math.abs(result - target)) {
                 result = sum
             }
             if (sum > target) {
-                r--
+                right--
             } else {
-                l++
+                left++
             }
         }
     }
-
     return result
 }

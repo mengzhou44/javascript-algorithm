@@ -1,17 +1,47 @@
+ 
+*************
+
 function canVisitAllRooms(rooms) {
-    let visited = new Array(rooms.length).fill(false)
-
-    dfs(0, rooms)
-    function dfs(current, rooms) {
-        if (visited[current] === true) return
-        visited[current] = true
-
-        for (let room of rooms[current]) {
-            dfs(room, rooms, visited)
-        }
+    let graph = new Map()
+    for (let i = 0; i < rooms.length; i++) {
+        graph.set(i, rooms[i])
     }
+    return dfs(0)
 
-    let temp = visited.filter((item) => item === true)
-
-    return temp.length === rooms.length
+    function dfs(room, visited = new Set()) {
+        visited.add(room)
+        if (visited.size === rooms.length) {
+            return true
+        }
+        for (let key of graph.get(room)) {
+            if (!visited.has(key)) {
+                if (dfs(key, visited)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
+/**
+ * @param {number[][]} rooms
+ * @return {boolean}
+ */
+function canVisitAllRooms(rooms) {
+    let visited = []
+    dfs(0)
+   
+    return visited.length === rooms.length   
+  
+    function dfs(room) {
+        visited.push(room)
+        let nextRoomsToVisit = rooms[room]
+        for(let item of nextRoomsToVisit) {
+            if (!visited.includes(item)){
+                dfs(item)
+            }
+        }     
+   }
+}
+
+

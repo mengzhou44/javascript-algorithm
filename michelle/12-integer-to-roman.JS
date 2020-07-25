@@ -1,33 +1,29 @@
-let values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+let map = new Map()
+map.set('M', 1000)
+map.set('CM', 900)
+map.set('D', 500)
+map.set('CD', 400)
+map.set('C', 100)
+map.set('XC', 90)
+map.set('L', 50)
+map.set('XL', 40)
+map.set('X', 10)
+map.set('IX', 9)
+map.set('V', 5)
+map.set('IV', 4)
+map.set('I', 1)
 
-let numerals = [
-    'M',
-    'CM',
-    'D',
-    'CD',
-    'C',
-    'XC',
-    'L',
-    'XL',
-    'X',
-    'IX',
-    'V',
-    'IV',
-    'I'
-]
-
-var intToRoman = function(num) {
-    let index = 0
-    let result = ''
-    while (index < values.length) {
-        let temp = Math.floor(num / values[index])
-        num = num - temp * values[index]
-        result += createSymbols(temp, numerals[index])
-        index++
+function intToRoman(num) {
+    let array = []
+    for (let key of map.keys()) {
+        let val = map.get(key)
+        let temp = Math.floor(num / val)
+        num = num - temp * val
+        array.push(createSymbols(temp, key))
     }
-    return result
+    return array.join('')
 }
 
-function createSymbols(num, s) {
-    return new Array(num).fill(s).join('')
+function createSymbols(num, symbol) {
+    return new Array(num).fill(symbol).join('')
 }
