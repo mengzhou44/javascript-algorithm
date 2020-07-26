@@ -1,55 +1,49 @@
 function generateParenthesis(n) {
-    let res = []
-    helper(res, '', n, n)
-    return res
+    let result = []
+
+    backtrack('', 0, 0)
+
+    return result
+
+    function backtrack(current, open, close) {
+        if (current.length === n * 2) {
+            result.push(current)
+            return
+        }
+
+        if (open < n) {
+            backtrack(current + '(', open + 1, close)
+        }
+
+        if (open > close) {
+            backtrack(current + ')', open, close + 1)
+        }
+    }
 }
 
-function helper(result, item, left, right) {
-    if (left > right) return
-
-    if (left === 0 && right === 0) result.push(item)
-
-    if (left > 0) {
-        helper(result, item + '(', left - 1, right)
-    }
-
-    if (right > 0) {
-        helper(result, item + ')', left, right - 1)
-    }
-}
-
-let result = generateParenthesis(3)
-console.log(result)
-
-
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
 function generateParenthesis(n) {
-    if (n === 0)  return  []
-    
-    let result = [] 
-    generate(0,0,"")
-  
-    return result 
-   
-    function generate(l, r, item) { 
-         if (l<r) return 
-         if (l=== n) {
-             let count = n-r
-             let k=0
-             while(k<count) {
-                 item=item+")"
-                 k++
-             }
-             result.push(item)
-             return 
-         }
-         if (l === r ) {
-             generate(l+1, r, item+"(")        
-         }
-         
-         generate(l+1,r, item+"(")
-         generate(l, r+1, item+")")
-                  
-    }
- 
-}
+    let result = []
+    helper('', 0, 0)
 
+    return result
+
+    function helper(current, open, close) {
+        if (current.length === 2 * n) {
+            result.push(current)
+        }
+
+        if (close > open) return
+
+        if (open < n) {
+            helper(current + '(', open + 1, close)
+        }
+
+        if (close < n) {
+            helper(current + ')', open, close + 1)
+        }
+    }
+}
