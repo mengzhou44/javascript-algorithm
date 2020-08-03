@@ -1,4 +1,4 @@
-const PriorityQueue = require('./priority-queue')
+const PriorityQueue1 = require('./priority-queue1')
 
 class Node {
     constructor(label) {
@@ -82,7 +82,7 @@ class WeightedGraph {
     //Dijkastra algorithm
 
     getShortestDistance(from, to) {
-        let queue = new PriorityQueue((a, b) => a.priority > b.priority)
+        let queue = new PriorityQueue1((a, b) => a.priority < b.priority)
         let distances = new Map()
         for (let node of this.map.values()) {
             distances.set(node.label, {
@@ -124,7 +124,7 @@ class WeightedGraph {
 
     getShortestPath(from, to) {
 
-      let queue = new PriorityQueue((a, b) => a.priority > b.priority)
+      let queue = new PriorityQueue1((a, b) => a.priority < b.priority)
       let distances = new Map()
       for (let node of this.map.values()) {
           distances.set(node.label, {
@@ -218,7 +218,7 @@ class WeightedGraph {
      let tree= new WeightedGraph()
      if (this.size() === 0)  return tree 
 
-     let queue = new PriorityQueue((a,b)=> a.weight< b.weight)
+     let queue = new PriorityQueue1((a,b)=> a.weight< b.weight)
      let nextNode = this.map.values().next().value
     
      tree.addNode(nextNode.label)
@@ -271,7 +271,7 @@ graph2.addEdge('C', 'D', 1)
 graph2.addEdge('D', 'B', 1)
 
 let tree = graph2.getMinimumSpanningTree()
- tree.print()
+tree.print()
 
 
 // let graph1 = new WeightedGraph()
