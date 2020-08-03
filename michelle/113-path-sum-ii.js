@@ -29,3 +29,23 @@ function pathSum(root, sum) {
     helper(root, sum)
     return result
 }
+
+function pathSum(root, sum) {
+    let pathList = []
+
+    dfs(root, sum)
+
+    return pathList
+
+    function dfs(node, sum, path = []) {
+        if (node === null) return
+        path.push(node.val)
+        if (node.left === null && node.right === null && node.val === sum) {
+            pathList.push(path)
+            return
+        }
+
+        dfs(node.left, sum - node.val, [...path])
+        dfs(node.right, sum - node.val, [...path])
+    }
+}
