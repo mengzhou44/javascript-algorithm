@@ -1,0 +1,8 @@
+Data structures: 
+
+hash map, linked list, tree,  stack, queue, priorty queue (heap), trie, graph 
+
+
+Algorithtms:
+ 
+merge sort, qucik sort, binary search, dfs, bfs, 
